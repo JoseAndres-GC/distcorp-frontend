@@ -10,19 +10,25 @@ import Hero from "@/components/hero";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
+const vendedores = [
+  { nombre: "Vendedora Blanca", numero: "59161347100" },
+  { nombre: "Vendedor Huby", numero: "59169215271" },
+  { nombre: "Vendedor Agustin", numero: "59177733333" },
+];
+
 export default function ProductoPage() {
   const params = useParams();
   const id = parseInt(params.id as string);
   const product: Product | undefined = products.find((p) => p.id === id);
   const [cantidad, setCantidad] = useState(1);
+  const [vendedor, setVendedor] = useState(vendedores[0]);
 
   if (!product) return notFound();
 
-  const numeroWhatsapp = "59169215271";
   const mensaje = `Hola, quiero comprar *${cantidad}x ${product.name}* a $${product.price} cada uno.`;
-  const urlWhatsapp = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(
-    mensaje
-  )}`;
+  const urlWhatsapp = `https://wa.me/${
+    vendedor.numero
+  }?text=${encodeURIComponent(mensaje)}`;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F1F8F5] text-[#2E3A59]">
@@ -42,6 +48,7 @@ export default function ProductoPage() {
             <p className="text-2xl text-[#388E3C] font-semibold mb-6">
               ${product.price}
             </p>
+
             <div className="flex flex-col gap-4">
               <label htmlFor="cantidad" className="text-lg font-medium">
                 Cantidad:
@@ -54,6 +61,27 @@ export default function ProductoPage() {
                 onChange={(e) => setCantidad(parseInt(e.target.value))}
                 className="bg-white text-black border border-gray-300 p-2 rounded w-24"
               />
+
+              <label htmlFor="vendedor" className="text-lg font-medium">
+                Vendedor:
+              </label>
+              <select
+                id="vendedor"
+                value={vendedor.nombre}
+                onChange={(e) =>
+                  setVendedor(
+                    vendedores.find((v) => v.nombre === e.target.value)!
+                  )
+                }
+                className="bg-white text-black border border-gray-300 p-2 rounded"
+              >
+                {vendedores.map((v) => (
+                  <option key={v.numero} value={v.nombre}>
+                    {v.nombre}
+                  </option>
+                ))}
+              </select>
+
               <button
                 onClick={() => {
                   window.open(urlWhatsapp, "_blank");
