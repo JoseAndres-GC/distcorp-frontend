@@ -1,4 +1,4 @@
-"use client"; // 👈 IMPORTANTE para que funcione useState
+"use client";
 
 import { useState } from "react";
 import Header from "@/components/header";
@@ -24,29 +24,15 @@ export default function Home() {
           Nuestros Productos
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Fila de 3 productos */}
-          {filteredProducts.slice(0, 3).map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-
-          {/* Producto destacado grande y uno al costado */}
-          {filteredProducts.length > 3 && (
-            <>
-              <div className="sm:col-span-2 md:col-span-2">
-                <ProductCard product={filteredProducts[3]} />
-              </div>
-              {filteredProducts[4] && (
-                <ProductCard product={filteredProducts[4]} />
-              )}
-            </>
-          )}
-
-          {/* Más productos si hay */}
-          {filteredProducts.slice(5).map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {filteredProducts.length === 0 ? (
+          <p className="text-center text-lg">No se encontraron productos.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            {filteredProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
       </main>
 
       <Footer />
