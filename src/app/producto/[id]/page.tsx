@@ -11,9 +11,9 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 const vendedores = [
-  { nombre: "Vendedora Blanca", numero: "59161347100" },
-  { nombre: "Vendedor Huby", numero: "59169215271" },
-  { nombre: "Vendedor Agustin", numero: "59177733333" },
+  { nombre: "Blanca", numero: "59161347100" },
+  { nombre: "Huby", numero: "59169215271" },
+  { nombre: "Agustin", numero: "59177733333" },
 ];
 
 export default function ProductoPage() {
