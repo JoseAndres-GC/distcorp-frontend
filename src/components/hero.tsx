@@ -1,21 +1,30 @@
+// src/components/hero.tsx
 "use client";
 
-type HeroProps = {
-  onSearch?: (value: string) => void;
-};
+import { useState } from "react";
 
-export default function Hero({ onSearch }: HeroProps) {
+export default function Hero() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    // Acá podrías filtrar productos o navegar a otra ruta si querés
+  };
+
   return (
-    <section className="bg-[#388E3C] text-white text-center py-12 px-4">
+    <section className="bg-[#388E3C] text-white text-center py-12">
       <h1 className="text-4xl font-extrabold tracking-wide mb-4">
-        <span className="block text-white">LAVAVAJILLAS</span>
+        <span className="block">LAVAVAJILLAS</span>
         <span className="text-[#FF6F61] text-5xl">HOGAR</span>
       </h1>
-      <div className="mt-6 max-w-md mx-auto">
+
+      <div className="mt-6">
         <input
           type="text"
+          value={searchTerm}
+          onChange={handleSearch}
           placeholder="Buscar productos..."
-          className="mt-4 px-4 py-2 w-full max-w-md rounded border border-gray-300 text-white bg-transparent placeholder-white"
+          className="px-4 py-2 rounded border border-white bg-transparent text-white placeholder-white w-full max-w-md"
         />
       </div>
     </section>
