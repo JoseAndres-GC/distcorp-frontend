@@ -5,6 +5,7 @@ export const products = [
     description: "Camiseta básica de algodón.",
     price: 19.99,
     image: "/images/1.jpg",
+    category: "Limpieza",
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/2.jpg",
+    category: "Higiene",
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/3.jpg",
+    category: "Higiene",
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/4.jpg",
+    category: "Higiene",
   },
   {
     id: 5,
@@ -33,6 +37,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/5.jpg",
+    category: "Limpieza",
   },
   {
     id: 6,
@@ -40,6 +45,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/6.jpg",
+    category: "Indumentaria",
   },
   {
     id: 7,
@@ -47,6 +53,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/7.jpg",
+    category: "Otros",
   },
   {
     id: 8,
@@ -54,6 +61,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/8.jpg",
+    category: "Otros",
   },
   {
     id: 9,
@@ -61,6 +69,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/9.jpg",
+    category: "Otros",
   },
   {
     id: 10,
@@ -68,6 +77,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/10.jpg",
+    category: "Otros",
   },
   {
     id: 11,
@@ -75,6 +85,7 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/11.jpg",
+    category: "Otros",
   },
   {
     id: 12,
@@ -82,5 +93,6 @@ export const products = [
     description: "Perfectas para correr o caminar.",
     price: 59.99,
     image: "/images/12.jpg",
+    category: "Otros",
   },
 ];
