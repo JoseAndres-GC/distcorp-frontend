@@ -13,8 +13,12 @@ export default function ProductCard({ product }: { product: Product }) {
           height={0}
           className="mx-auto mb-4 object-contain w-full h-auto"
         />
-        <h3 className="text-sm font-bold uppercase">{product.name}</h3>
-        <p className="text-[#FF6F61] font-semibold text-xs">${product.price}</p>
+        <h3 className="text-sm font-bold uppercase mb-2">{product.name}</h3>
+
+        <div className="text-xs text-[#FF6F61] font-semibold space-y-1">
+          <p>Unidad: ${product.priceUnitario.toFixed(2)}</p>
+          <p>Caja: ${product.priceCaja.toFixed(2)}</p>
+        </div>
       </div>
     </Link>
   );

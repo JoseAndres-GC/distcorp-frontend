@@ -22,10 +22,14 @@ export default function ProductoPage() {
   const product: Product | undefined = products.find((p) => p.id === id);
   const [cantidad, setCantidad] = useState(1);
   const [vendedor, setVendedor] = useState(vendedores[0]);
+  const [tipoCompra, setTipoCompra] = useState<"unidad" | "caja">("unidad");
 
   if (!product) return notFound();
 
-  const mensaje = `Hola, quiero comprar *${cantidad}x ${product.name}* a $${product.price} cada uno.`;
+  const precioSeleccionado =
+    tipoCompra === "unidad" ? product.priceUnitario : product.priceCaja;
+
+  const mensaje = `Hola, quiero comprar *${cantidad}x ${product.name} (${tipoCompra})* a $${precioSeleccionado} cada uno.`;
   const urlWhatsapp = `https://wa.me/${
     vendedor.numero
   }?text=${encodeURIComponent(mensaje)}`;
@@ -46,10 +50,32 @@ export default function ProductoPage() {
           <div className="flex-1">
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             <p className="text-2xl text-[#388E3C] font-semibold mb-6">
-              ${product.price}
+              ${precioSeleccionado}
             </p>
 
             <div className="flex flex-col gap-4">
+              <label className="text-lg font-medium">Tipo de compra:</label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="unidad"
+                    checked={tipoCompra === "unidad"}
+                    onChange={() => setTipoCompra("unidad")}
+                  />
+                  Unidad (${product.priceUnitario})
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    value="caja"
+                    checked={tipoCompra === "caja"}
+                    onChange={() => setTipoCompra("caja")}
+                  />
+                  Caja (${product.priceCaja})
+                </label>
+              </div>
+
               <label htmlFor="cantidad" className="text-lg font-medium">
                 Cantidad:
               </label>
