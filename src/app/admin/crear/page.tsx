@@ -39,7 +39,11 @@ export default function CrearProductoPage() {
       .then((res) => res.json())
       .then((data) => setImagenes(data as string[]));
 
-    fetch("http://localhost:4000/api/products")
+    fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/products`
+    )
       .then((res) => res.json())
       .then((data: { category: string }[]) => {
         const uniqueCategories = Array.from(
@@ -56,18 +60,23 @@ export default function CrearProductoPage() {
       return setMensaje("Por favor completá todos los campos obligatorios.");
     }
 
-    const res = await fetch("http://localhost:4000/api/products", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        ...form,
-        priceUnitario: parseFloat(form.priceUnitario),
-        priceCaja: parseFloat(form.priceCaja),
-      }),
-    });
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/products`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          ...form,
+          priceUnitario: parseFloat(form.priceUnitario),
+          priceCaja: parseFloat(form.priceCaja),
+        }),
+      }
+    );
 
     if (res.ok) {
       setMensaje("✅ Producto creado correctamente.");

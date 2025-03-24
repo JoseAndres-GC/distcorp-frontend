@@ -39,7 +39,11 @@ export default function EditarProductoPage() {
       setToken(saved);
     }
 
-    fetch("http://localhost:4000/api/products")
+    fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/products`
+    )
       .then((res) => res.json())
       .then((data: Product[]) => {
         setProductos(data);
@@ -78,7 +82,9 @@ export default function EditarProductoPage() {
     }
 
     const res = await fetch(
-      `http://localhost:4000/api/products/${editando._id}`,
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/products/${editando._id}`,
       {
         method: "PUT",
         headers: {
@@ -106,7 +112,9 @@ export default function EditarProductoPage() {
       });
 
       const actualizados = await fetch(
-        "http://localhost:4000/api/products"
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+        }/api/products`
       ).then((r) => r.json());
       setProductos(actualizados);
     } else {

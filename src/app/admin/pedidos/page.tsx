@@ -23,7 +23,12 @@ export default function PedidosPage() {
   useEffect(() => {
     const fetchPedidos = async () => {
       try {
-        const res = await fetch("http://localhost:4000/api/pedidos");
+        const res = await fetch(
+          `${
+            process.env.NEXT_PUBLIC_API_URL ||
+            "https://distcorp-api.onrender.com"
+          }/api/pedidos`
+        );
         const data = await res.json();
         setPedidos(data);
       } catch (error) {
@@ -38,7 +43,11 @@ export default function PedidosPage() {
 
   const descargarExcel = async () => {
     try {
-      const response = await fetch("http://localhost:4000/api/pedidos/excel");
+      const response = await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+        }/api/pedidos/excel`
+      );
       const blob = await response.blob();
 
       const url = window.URL.createObjectURL(blob);

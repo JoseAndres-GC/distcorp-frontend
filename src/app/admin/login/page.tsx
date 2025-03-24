@@ -14,13 +14,18 @@ export default function AdminLoginPage() {
       return setMensaje("Por favor completá los campos.");
     }
 
-    const res = await fetch("http://localhost:4000/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username: usuario, password }),
-    });
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/auth/login`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username: usuario, password }),
+      }
+    );
 
     const data = await res.json().catch(() => ({}));
 

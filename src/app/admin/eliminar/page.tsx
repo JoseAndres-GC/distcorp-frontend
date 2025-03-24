@@ -21,7 +21,11 @@ export default function EliminarProductoPage() {
       router.replace("/admin");
     } else {
       setToken(savedToken);
-      fetch("http://localhost:4000/api/products")
+      fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+        }/api/products`
+      )
         .then((res) => res.json())
         .then((data) => setProductos(data));
     }
@@ -33,12 +37,17 @@ export default function EliminarProductoPage() {
     );
     if (!confirmar || !token) return;
 
-    const res = await fetch(`http://localhost:4000/api/products/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await fetch(
+      `${
+        process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+      }/api/products/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (res.ok) {
       setMensaje("✅ Producto eliminado correctamente.");

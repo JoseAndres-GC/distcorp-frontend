@@ -27,7 +27,10 @@ export default function ProductoPage() {
     const fetchProduct = async () => {
       try {
         const res = await fetch(
-          `http://localhost:4000/api/products/${params.id}`
+          `${
+            process.env.NEXT_PUBLIC_API_URL ||
+            "https://distcorp-api.onrender.com"
+          }/api/products/${params.id}`
         );
         if (!res.ok) throw new Error("Producto no encontrado");
         const data = await res.json();
@@ -73,11 +76,16 @@ export default function ProductoPage() {
     };
 
     try {
-      await fetch("http://localhost:4000/api/pedidos", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(pedido),
-      });
+      await fetch(
+        `${
+          process.env.NEXT_PUBLIC_API_URL || "https://distcorp-api.onrender.com"
+        }/api/pedidos`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pedido),
+        }
+      );
 
       window.open(urlWhatsapp, "_blank");
       setCantidad(1);
