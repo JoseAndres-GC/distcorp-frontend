@@ -1,11 +1,10 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { products } from "@/data/products";
 import { Product } from "@/types/product";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hero from "@/components/hero";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -18,13 +17,38 @@ const vendedores = [
 
 export default function ProductoPage() {
   const params = useParams();
-  const id = parseInt(params.id as string);
-  const product: Product | undefined = products.find((p) => p.id === id);
+  const [product, setProduct] = useState<Product | null>(null);
   const [cantidad, setCantidad] = useState(1);
   const [vendedor, setVendedor] = useState(vendedores[0]);
   const [tipoCompra, setTipoCompra] = useState<"unidad" | "caja">("unidad");
+  const [error, setError] = useState(false);
 
-  if (!product) return notFound();
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:4000/api/products/${params.id}`
+        );
+        if (!res.ok) throw new Error("Producto no encontrado");
+        const data = await res.json();
+        setProduct(data);
+      } catch (err) {
+        console.error("Error al obtener producto:", err);
+        setError(true);
+      }
+    };
+
+    fetchProduct();
+  }, [params.id]);
+
+  if (error) return notFound();
+  if (!product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F1F8F5] text-[#2E3A59]">
+        <p className="text-lg animate-pulse">Cargando producto...</p>
+      </div>
+    );
+  }
 
   const precioSeleccionado =
     tipoCompra === "unidad" ? product.priceUnitario : product.priceCaja;
@@ -33,6 +57,34 @@ export default function ProductoPage() {
   const urlWhatsapp = `https://wa.me/${
     vendedor.numero
   }?text=${encodeURIComponent(mensaje)}`;
+
+  const handleAgregarAlCarrito = async () => {
+    const pedido = {
+      vendedor: vendedor.nombre,
+      productos: [
+        {
+          nombre: product.name,
+          cantidad,
+          precioUnitario: product.priceUnitario,
+          precioPorCaja: product.priceCaja,
+          tipoPrecio: tipoCompra,
+        },
+      ],
+    };
+
+    try {
+      await fetch("http://localhost:4000/api/pedidos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pedido),
+      });
+
+      window.open(urlWhatsapp, "_blank");
+      setCantidad(1);
+    } catch (error) {
+      console.error("Error al guardar pedido:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F1F8F5] text-[#2E3A59]">
@@ -52,6 +104,7 @@ export default function ProductoPage() {
             <p className="text-2xl text-[#388E3C] font-semibold mb-6">
               ${precioSeleccionado}
             </p>
+            <p className="text-gray-700 mb-4">{product.description}</p>
 
             <div className="flex flex-col gap-4">
               <label className="text-lg font-medium">Tipo de compra:</label>
@@ -109,10 +162,7 @@ export default function ProductoPage() {
               </select>
 
               <button
-                onClick={() => {
-                  window.open(urlWhatsapp, "_blank");
-                  setCantidad(1);
-                }}
+                onClick={handleAgregarAlCarrito}
                 className="bg-[#388E3C] text-white py-2 px-6 rounded hover:bg-[#2E7D32] transition text-center"
               >
                 Agregar al carrito (WhatsApp)

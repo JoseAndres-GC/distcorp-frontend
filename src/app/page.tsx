@@ -1,21 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/components/header";
 import Hero from "@/components/hero";
 import ProductCard from "@/components/productcard";
 import Footer from "@/components/footer";
-import { products } from "@/data/products";
+import { Product } from "@/types/product";
 
 export default function Home() {
+  const [products, setProducts] = useState<Product[]>([]);
   const [query, setQuery] = useState("");
-  const [categoria, setCategoria] = useState("Todas");
+  const [selectedCategory, setSelectedCategory] = useState("Todas");
+  const [categories, setCategories] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("http://localhost:4000/api/products");
+        const data = (await res.json()) as Product[];
+        setProducts(data);
+
+        const uniqueCategories = Array.from(
+          new Set(data.map((p) => p.category))
+        );
+        setCategories(["Todas", ...uniqueCategories]);
+      } catch (error) {
+        console.error("Error al obtener productos:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const filteredProducts = products.filter((product) => {
-    const matchCategoria =
-      categoria === "Todas" || product.category === categoria;
-    const matchQuery = product.name.toLowerCase().includes(query.toLowerCase());
-    return matchCategoria && matchQuery;
+    const matchesName = product.name
+      .toLowerCase()
+      .includes(query.toLowerCase());
+    const matchesCategory =
+      selectedCategory === "Todas" || product.category === selectedCategory;
+    return matchesName && matchesCategory;
   });
 
   return (
@@ -28,17 +51,16 @@ export default function Home() {
           Nuestros Productos
         </h2>
 
-        {/* Selector de Categorías */}
         <div className="flex flex-wrap justify-center gap-4 mb-8">
-          {["Todas", "Limpieza", "Higiene", "Indumentaria"].map((cat) => (
+          {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setCategoria(cat)}
-              className={`px-4 py-2 rounded-full border text-sm font-semibold transition ${
-                categoria === cat
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-4 py-1 rounded-full border text-sm transition font-semibold ${
+                selectedCategory === cat
                   ? "bg-[#388E3C] text-white"
                   : "bg-white text-[#2E3A59] border-gray-300"
-              } hover:bg-[#2E7D32] hover:text-white`}
+              }`}
             >
               {cat}
             </button>
@@ -50,7 +72,7 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {filteredProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard key={product._id} product={product} />
             ))}
           </div>
         )}

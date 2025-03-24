@@ -4,7 +4,7 @@ import { Product } from "@/types/product";
 
 export default function ProductCard({ product }: { product: Product }) {
   return (
-    <Link href={`/producto/${product.id}`}>
+    <Link href={`/producto/${product._id}`}>
       <div className="bg-white text-[#2E3A59] rounded-md p-4 text-center hover:scale-105 transition-transform shadow-md">
         <Image
           src={product.image}
@@ -13,12 +13,13 @@ export default function ProductCard({ product }: { product: Product }) {
           height={0}
           className="mx-auto mb-4 object-contain w-full h-auto"
         />
-        <h3 className="text-sm font-bold uppercase mb-2">{product.name}</h3>
-
-        <div className="text-xs text-[#FF6F61] font-semibold space-y-1">
-          <p>Unidad: ${product.priceUnitario.toFixed(2)}</p>
-          <p>Caja: ${product.priceCaja.toFixed(2)}</p>
-        </div>
+        <h3 className="text-sm font-bold uppercase">{product.name}</h3>
+        <p className="text-[#FF6F61] font-semibold text-sm mt-2">
+          Unidad: ${product.priceUnitario.toFixed(2)}
+        </p>
+        <p className="text-[#FF6F61] font-semibold text-sm">
+          Caja: ${product.priceCaja.toFixed(2)}
+        </p>
       </div>
     </Link>
   );

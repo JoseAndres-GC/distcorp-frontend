@@ -18,7 +18,6 @@ export default function Hero({ onSearch }: HeroProps) {
         <span className="text-[#FF6F61] text-5xl">STORE</span>
       </h1>
 
-      {/* Solo muestra la barra si hay onSearch */}
       {onSearch && (
         <div className="mt-6">
           <input
