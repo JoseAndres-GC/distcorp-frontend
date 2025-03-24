@@ -13,6 +13,7 @@ export async function GET() {
 
     return NextResponse.json(imageFiles);
   } catch (error) {
+    console.error("Error leyendo imágenes:", error);
     return NextResponse.json(
       { error: "Error leyendo la carpeta de imágenes" },
       { status: 500 }
