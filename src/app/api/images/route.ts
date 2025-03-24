@@ -12,6 +12,8 @@ export async function GET() {
     );
 
     return NextResponse.json(imageFiles);
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return NextResponse.json(
       { error: "Error leyendo la carpeta de imágenes" },
