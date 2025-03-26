@@ -13,7 +13,7 @@ export default function Nosotros() {
 
         <div className="mb-10">
           <Image
-            src="/images/nosotros.jpg"
+            src="/images/Nosotros.png"
             alt="Nosotros"
             width={800}
             height={400}
