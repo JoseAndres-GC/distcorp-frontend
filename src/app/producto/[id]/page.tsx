@@ -10,9 +10,9 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 
 const vendedores = [
-  { nombre: "Blanca", numero: "59161347100" },
-  { nombre: "Huby", numero: "59169215271" },
-  { nombre: "Agustin", numero: "59177733333" },
+  { nombre: "Blanca", numero: "59165867577" },
+  { nombre: "Agustin", numero: "59178026651" },
+  { nombre: "Gloria", numero: "59170868264" },
 ];
 
 export default function ProductoPage() {
