@@ -13,6 +13,7 @@ const vendedores = [
   { nombre: "Blanca", numero: "59165867577" },
   { nombre: "Agustin", numero: "59178026651" },
   { nombre: "Gloria", numero: "59170868264" },
+  { nombre: "Prueba", numero: "59169215271" },
 ];
 
 export default function ProductoPage() {
