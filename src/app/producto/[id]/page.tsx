@@ -57,7 +57,7 @@ export default function ProductoPage() {
   const precioSeleccionado =
     tipoCompra === "unidad" ? product.priceUnitario : product.priceCaja;
 
-  const mensaje = `Hola, quiero comprar ${cantidad}x ${product.name} (${tipoCompra}) a ${precioSeleccionado} BS cada uno.`;
+  const mensaje = `Hola, quiero comprar ${cantidad} ${product.name} (${tipoCompra}) a ${precioSeleccionado} Bs cada uno.`;
   const urlWhatsapp = `https://wa.me/${
     vendedor.numero
   }?text=${encodeURIComponent(mensaje)}`;
