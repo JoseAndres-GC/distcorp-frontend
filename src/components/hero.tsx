@@ -1,5 +1,7 @@
 "use client";
 
+import { FaFacebook, FaTiktok } from "react-icons/fa";
+
 interface HeroProps {
   onSearch?: (value: string) => void;
 }
@@ -29,6 +31,26 @@ export default function Hero({ onSearch }: HeroProps) {
           />
         </div>
       )}
+
+      {/* Redes sociales */}
+      <div className="flex justify-center gap-6 mt-8 text-2xl">
+        <a
+          href="https://www.facebook.com/lavavajillashogar/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#FF6F61] transition-colors"
+        >
+          <FaFacebook />
+        </a>
+        <a
+          href="https://www.tiktok.com/@hogar.lavavajilla"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-[#FF6F61] transition-colors"
+        >
+          <FaTiktok />
+        </a>
+      </div>
     </section>
   );
 }
